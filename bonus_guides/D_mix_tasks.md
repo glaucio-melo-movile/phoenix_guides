@@ -53,8 +53,8 @@ The `phoenix.new` task will also ask us if we want to install our dependencies. 
 
 ```console
 Fetch and install dependencies? [Yn] y
-* running npm install && node node_modules/brunch/bin/brunch build
 * running mix deps.get
+* running npm install && node node_modules/brunch/bin/brunch build
 ```
 
 Once all of our dependencies are installed, `phoenix.new` will tell us what our next steps are.
@@ -62,12 +62,16 @@ Once all of our dependencies are installed, `phoenix.new` will tell us what our 
 ```console
 We are all set! Run your Phoenix application:
 
-$ cd task_tester
-$ mix phoenix.server
+    $ cd task_tester
+    $ mix phoenix.server
 
-You can also run it inside IEx (Interactive Elixir) as:
+You can also run your app inside IEx (Interactive Elixir) as:
 
-$ iex -S mix phoenix.server
+    $ iex -S mix phoenix.server
+
+Before moving on, configure your database in config/dev.exs and run:
+
+    $ mix ecto.create
 ```
 
 By default `phoenix.new` will assume we want to use ecto for our models. If we don't want to use ecto in our application, we can use the `--no-ecto` flag.
@@ -392,18 +396,13 @@ page_path  GET  /  TaskTester.PageController.index/2
 
 #### `mix phoenix.server`
 
-This is the task we use to get our application running. It takes no arguments at all. If we pass any in, they will be silently ignored.
+This is the task we use to get our application running. This task accepts the same command-line arguments as Mix.Tasks.run. For additional information, refer to the documentation for Mix.Tasks.Run.
 
 ```console
 $ mix phoenix.server
-[info] Running TaskTester.Endpoint with Cowboy on port 4000 (http)
+[info] Running TaskTester.Endpoint with Cowboy on port 4000
 ```
-It silently ignores our `DoesNotExist` argument.
 
-```console
-$ mix phoenix.server DoesNotExist
-[info] Running TaskTester.Endpoint with Cowboy on port 4000 (http)
-```
 Prior to the 0.8.x versions of Phoenix, we used the `phoenix.start` task to get our applications running. That task no longer exists, and attempting to run it will cause an error.
 
 ```console
@@ -414,10 +413,10 @@ If we would like to start our application and also have an `iex` session open to
 
 ```console
 $ iex -S mix phoenix.server
-Erlang/OTP 17 [erts-6.4] [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+Erlang/OTP 18 [erts-7.2.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 
-[info] Running TaskTester.Endpoint with Cowboy on port 4000 (http)
-Interactive Elixir (1.0.4) - press Ctrl+C to exit (type h() ENTER for help)
+[info] Running TaskTester.Endpoint with Cowboy using http on port 4000
+Interactive Elixir (1.2.3) - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)>
 ```
 
